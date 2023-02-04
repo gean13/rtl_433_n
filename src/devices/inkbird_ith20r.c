@@ -119,7 +119,7 @@ static int inkbird_ith20r_callback(r_device *decoder, bitbuffer_t *bitbuffer)
             "sensor_num",       "",             DATA_INT,    sensor_num,
             "mic",              "Integrity",    DATA_STRING, "CRC",
             "temperature_C",    "Temperature",  DATA_FORMAT, "%.1f C", DATA_DOUBLE, temperature,
-            "temperature2_C",   "Temperature2", DATA_FORMAT, "%.1f C", DATA_DOUBLE, temperature_ext,
+            "temperature_2_C",  "Temperature2", DATA_FORMAT, "%.1f C", DATA_DOUBLE, temperature_ext,
             "humidity",         "Humidity",     DATA_FORMAT, "%.1f %%", DATA_DOUBLE, humidity,
             NULL);
     /* clang-format on */
@@ -135,12 +135,12 @@ static char *output_fields[] = {
         "sensor_num",
         "mic",
         "temperature_C",
-        "temperature2_C",
+        "temperature_2_C",
         "humidity",
         NULL,
 };
 
-r_device inkbird_ith20r = {
+r_device const inkbird_ith20r = {
         .name        = "Inkbird ITH-20R temperature humidity sensor",
         .modulation  = FSK_PULSE_PCM,
         .short_width = 100,  // Width of a '0' gap
