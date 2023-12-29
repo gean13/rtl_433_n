@@ -12,33 +12,39 @@ to improve the feedback loop and decrease the burden for the maintainers.
 Pull-Requests (PR) will be added as squash commit
 and the commit message will likely be updated to follow this format.
 
-The commit messages should follow the common format of
+For general work, e.g. adding or changing decoders
+the commit messages should follow a format of
+
+    <verb> [<decoder_model>] <commit_message>
+
+Verb must be one of the following:
+
+- `Add`: for new additions, e.g. device support
+- `Fix`: for changes that don't change anything to input/output (security related or bug fixing)
+- `Remove`: for changes that remove behaviour (e.g. some old algorithms are cleaned up)
+- `Change`: for changes that modify input/output behaviour (e.g. added checksums, preambles)
+- `Improve`: for improvements without changes in normal output/behaviour
+
+Don't prefix general work, e.g. adding a decoder should be `Add support for TheDevice`.
+
+Other commit messages should follow the common format of
 
     <area_of_work>: <verb> <commit_message>
 
 Area of work is optional and may be one of the following:
 
-- build: for build/build system related work
-- docs: for documentation related work, both in code and readme/docs folder
-- ci: for work related to continuous integration
-- test: for test related work
-- deps: for changes related to (external) dependencies (e.g. soapysdr is updated or mongoose is updated)
-- cosmetics: for housekeeping work, code style changes
-
-Don't prefix general work, e.g. adding a decoder should be "Add support for TheDevice".
-
-Verb may be one of the following:
-
-- Add: for new additions, e.g. device support
-- Fix: for changes that don't change anything to input/output (security related or bug fixing)
-- Remove: for changes that remove behaviour (e.g. some old algorithms are cleaned up)
-- Change: for changes that modify input/output behaviour (e.g. added checksums, preambles)
-- Improve: for improvements without changes in normal output/behaviour
+- `minor`: other small changes that do not warrant a changelog entry
+- `build`: for build/build system related work
+- `docs`: for documentation related work, both in code and readme/docs folder
+- `ci`: for work related to continuous integration
+- `test`: for test related work
+- `deps`: for changes related to (external) dependencies (e.g. soapysdr is updated or mongoose is updated)
+- `cosmetics`: for housekeeping work, code style changes
 
 ## Supporting Additional Devices and Test Data
 
-Some device protocol decoders are disabled by default. When testing to see if your device
-is decoded by rtl_433, use `-G 4` to enable all device protocols.
+Some device protocol decoders are disabled by default. If you have one of the default-disabled devices
+then enable all needed device protocols with the `-R` option.
 This will likely produce false positives, use with caution.
 
 The first step in decoding new devices is to record the signals using `-S unknown`.
@@ -52,8 +58,8 @@ The signals will be stored individually in files named g**NNN**\_**FFF**M\_**RRR
 
 This file can be played back with `rtl_433 -r gNNN_FFFM_RRRk.cu8`.
 
-These files are vital for understanding the signal format as well as the message data.  Use both analyzers
-`-a` and `-A` to look at the recorded signal and determine the pulse characteristics, e.g. `rtl_433 -r gNNN_FFFM_RRRk.cu8 -a -A`.
+These files are vital for understanding the signal format as well as the message data.  Use the analyzer
+with `-A` to look at the recorded signal and determine the pulse characteristics, e.g. `rtl_433 -r gNNN_FFFM_RRRk.cu8 -A`.
 
 Make sure you have recorded a proper set of test signals representing different conditions together
 with any and all information about the values that the signal should represent. For example, make a

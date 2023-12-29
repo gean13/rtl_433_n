@@ -266,7 +266,7 @@ static data_t *protocols_data(r_cfg_t *cfg)
             }
         }
         int fields_len = 0;
-        for (char **iter = dev->fields; iter && *iter; ++iter) {
+        for (char const *const *iter = dev->fields; iter && *iter; ++iter) {
             fields_len++;
         }
         data_t *data = data_make(
@@ -294,7 +294,7 @@ static data_t *protocols_data(r_cfg_t *cfg)
                 continue;
         }
         int fields_len = 0;
-        for (char **iter2 = dev->fields; iter2 && *iter2; ++iter2) {
+        for (char const *const *iter2 = dev->fields; iter2 && *iter2; ++iter2) {
             fields_len++;
         }
         data_t *data = data_make(
@@ -1130,6 +1130,7 @@ static struct http_server_context *http_server_start(struct mg_mgr *mgr, char co
     if (ctx->conn == NULL) {
         print_logf(LOG_ERROR, __func__, "Error starting server on address %s: %s", address,
                 *bind_opts.error_string);
+        ring_list_free(ctx->history);
         free(ctx);
         return NULL;
     }
@@ -1179,6 +1180,8 @@ static int http_server_stop(struct http_server_context *ctx)
     for (void **iter = ring_list_iter(ctx->history); iter; iter = ring_list_next(ctx->history, iter))
         free((data_t *)*iter);
     ring_list_free(ctx->history);
+
+    free(ctx);
 
     return 0;
 }
@@ -1251,5 +1254,5 @@ struct data_output *data_output_http_create(struct mg_mgr *mgr, char const *host
         exit(1);
     }
 
-    return &http->output;
+    return (struct data_output *)http;
 }

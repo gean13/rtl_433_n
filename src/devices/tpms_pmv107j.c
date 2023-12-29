@@ -65,7 +65,7 @@ static int tpms_pmv107j_decode(r_device *decoder, bitbuffer_t *bitbuffer, unsign
     }
 
     char id_str[9];
-    sprintf(id_str, "%08x", id);
+    snprintf(id_str, sizeof(id_str), "%08x", id);
 
     /* clang-format off */
     data_t *data = data_make(
@@ -108,7 +108,7 @@ static int tpms_pmv107j_callback(r_device *decoder, bitbuffer_t *bitbuffer)
     return events > 0 ? events : ret;
 }
 
-static char *output_fields[] = {
+static char const *const output_fields[] = {
         "model",
         "type",
         "id",
