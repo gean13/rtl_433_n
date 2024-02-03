@@ -259,8 +259,9 @@
     DECL(bresser_lightning) \
     DECL(schou_72543_rain) \
     DECL(fineoffset_wh55) \
+    DECL(interlogix_saw_pir_smoke) \
 
-    /* Add new decoders here. */
+/* Add new decoders here. */
 
 #define DECL(name) extern r_device name;
 DEVICES

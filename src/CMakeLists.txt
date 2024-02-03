@@ -144,6 +144,7 @@ add_library(r_433 STATIC
     devices/inkbird_ith20r.c
     devices/inovalley-kw9015b.c
     devices/insteon.c
+    devices/interlogix_saw_pir_smoke.c
     devices/interlogix.c
     devices/intertechno.c
     devices/jasco.c
